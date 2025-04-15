@@ -20,7 +20,6 @@ def main():
         # Expected format: id_title\tcontent
         parts = line.strip().split('\t')
         if len(parts) < 2:
-            print(f"Warning: Invalid input format: {line.strip()}", file=sys.stderr)
             continue
         
         id_title = parts[0]
@@ -39,14 +38,11 @@ def main():
         cleaned_content = clean_text(doc_content)
         terms = tokenize(cleaned_content)
         
-        # Output: term\tdoc_id\ttf
-        term_freq = {}
-        for term in terms:
-            if term:
-                term_freq[term] = term_freq.get(term, 0) + 1
+        # Count the number of terms in the document
+        term_count = len([t for t in terms if t])
         
-        for term, tf in term_freq.items():
-            print(f"{term}\t{doc_id}\t{tf}")
+        # Output: doc_id\ttitle\tterm_count
+        print(f"{doc_id}\t{doc_title}\t{term_count}")
 
 if __name__ == "__main__":
-    main()
+    main() 
